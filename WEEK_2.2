@@ -1,0 +1,92 @@
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
+
+public class ColorMeaningChecker {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Step 1: Initialize the map with predefined color meanings
+        Map<String, String> colorMeanings = new HashMap<>();
+        colorMeanings.put("red", "Red symbolizes passion, energy, and love.");
+        colorMeanings.put("blue", "Blue symbolizes calm, trust, and intelligence.");
+        colorMeanings.put("green", "Green symbolizes nature, balance, and growth.");
+        colorMeanings.put("yellow", "Yellow symbolizes happiness, optimism, and creativity.");
+        colorMeanings.put("black", "Black symbolizes elegance, mystery, and power.");
+        colorMeanings.put("white", "White symbolizes purity, simplicity, and peace.");
+        colorMeanings.put("purple", "Purple symbolizes royalty, luxury, and wisdom.");
+
+        System.out.println("🎨 Welcome to the Color Meaning Checker!");
+
+        while (true) {
+            System.out.println("\nWhat would you like to do?");
+            System.out.println("1. Check a color's meaning");
+            System.out.println("2. Add a new color meaning");
+            System.out.println("3. Show all available colors");
+            System.out.println("4. Exit");
+
+            System.out.print("Enter your choice (1-4): ");
+            String choice = scanner.nextLine().trim();
+
+            switch (choice) {
+                case "1": // Step 2-4: Check color meaning
+                    System.out.print("Enter a color name: ");
+                    String colorInput = scanner.nextLine().toLowerCase().trim();
+
+                    if (colorInput.isEmpty()) {
+                        System.out.println("⚠️ Input cannot be blank.");
+                    } else if (colorMeanings.containsKey(colorInput)) {
+                        System.out.println("✅ " + colorMeanings.get(colorInput));
+                    } else {
+                        System.out.println("❌ Color not found. Try again or add it to the list.");
+                    }
+                    break;
+
+                case "2": // Step 5: Add new color meaning
+                    System.out.print("Enter the new color name: ");
+                    String newColor = scanner.nextLine().toLowerCase().trim();
+
+                    if (newColor.isEmpty()) {
+                        System.out.println("⚠️ Color name cannot be empty.");
+                        break;
+                    }
+
+                    if (colorMeanings.containsKey(newColor)) {
+                        System.out.println("ℹ️ This color already exists. Use option 1 to view its meaning.");
+                    } else {
+                        System.out.print("Enter the meaning of '" + newColor + "': ");
+                        String newMeaning = scanner.nextLine().trim();
+                        if (newMeaning.isEmpty()) {
+                            System.out.println("⚠️ Meaning cannot be empty.");
+                        } else {
+                            colorMeanings.put(newColor, newMeaning);
+                            System.out.println("✅ Color added successfully!");
+                        }
+                    }
+                    break;
+
+                case "3": // Step 6: Display all available colors
+                    System.out.println("🎨 Available colors:");
+                    for (String color : colorMeanings.keySet()) {
+                        System.out.println("- " + capitalize(color));
+                    }
+                    break;
+
+                case "4": // Exit
+                    System.out.println("👋 Thank you for using the Color Meaning Checker!");
+                    scanner.close();
+                    return;
+
+                default: // Step 7: Basic error handling
+                    System.out.println("❌ Invalid choice. Please enter a number from 1 to 4.");
+            }
+        }
+    }
+
+    // Helper method to capitalize the first letter of a color
+    private static String capitalize(String word) {
+        if (word == null || word.length() == 0) return word;
+        return word.substring(0, 1).toUpperCase() + word.substring(1);
+    }
+}
